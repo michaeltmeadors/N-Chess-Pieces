@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>NChessPieces</title>
+		<style>
+			.top-level-container {
+
+			}
+		
+			.container-board {
+				display: inline-block;
+			}
+			
+			#board {
+				border-collapse: collapse;
+			}
+			
+			.label, .space {
+				width: 50px;
+				height: 50px;
+			}
+			
+			.label {
+				text-align: center;
+			}
+			
+			.space {
+				border: 1px solid black;
+				cursor: pointer;
+				text-align: center;
+				font-size: 36px;
+			}
+
+			
+			#piece-select-container {
+				margin-left: 50px;
+				margin-top: 10px;
+			}
+			
+			.piece-selector {
+				border: solid 1px black;
+				border-radius: 10px;
+				font-size: 50px;
+				cursor: pointer;
+				padding-left: 5px;
+				padding-right: 6px;
+				margin-right: 5px;
+			}
+			.piece-selector:hover {
+				background-color: #eee;
+			}
+			.piece-selector.selected-piece {
+				background-color: #eee;
+			}
+			
+			
+			/**/
+			#options-container {
+				margin-left: 50px;
+				margin-top: 10px;
+			}
+			
+			
+			#board-dimensions-section {
+				
+			}
+				
+			#board-dimensions-section input {
+				width: 25px;
+			}	
+			
+			/**/
+			#color-picker-container {
+				margin-left: 50px;
+				margin-top: 10px;
+			}
+			
+			#color-picker-container input {
+				margin-right: 7px;
+			}
+			
+			/**/
+			#space-counts-container {
+				margin-left: 50px;
+				margin-top: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="top-level-container">
+			<div class="board-container">
+			</div>
+			
+			
+		</div>
+
+		<div id="piece-select-container">
+			<span id="pawn-selector" class="piece-selector" onclick="selectPiece(event, 'pawn')">&#9823;</span>
+			<span id="knight-selector" class="piece-selector" onclick="selectPiece(event, 'knight')">&#9822;</span>
+			<span id="bishop-selector" class="piece-selector" onclick="selectPiece(event, 'bishop')">&#9821;</span>
+			<span id="rook-selector" class="piece-selector" onclick="selectPiece(event, 'rook')">&#9820;</span>
+			<span id="queen-selector" class="piece-selector" onclick="selectPiece(event, 'queen')">&#9819;</span>
+			<span id="king-selector" class="piece-selector" onclick="selectPiece(event, 'king')">&#9818;</span>
+		</div>
+		
+		<div id="options-container">
+			<button id="clear-board-btn" onclick="clearBoard()">Clear Board</button>
+			<span id="board-dimensions-section">
+				<label>Rows</label>
+				<select id="rows-selector">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8" selected>8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+				</select>
+				
+				<label>Cols</label>
+				<select id="cols-selector">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8" selected>8</option>
+					<option value="9" >9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>
+					<option value="25">25</option>
+					<option value="26">26</option>
+				</select>
+				
+				<button id="change-board-dimensions-btn" onclick="changeBoardSize()">Change Dimensions</button>
+			</span>
+		</div>
+		
+		<div id="color-picker-container">
+			<label>Free</label> <input id="color-picker-free" type="color" value="#ffffff" onchange="updateColors()"/>
+			<label>Piece On</label> <input id=color-picker-pieceOn type="color" value="#dddddd" onchange="updateColors()" />
+			<label>Covered</label> <input id="color-picker-covered" type="color" value="#bbbbbb" onchange="updateColors()" />
+			<label>Covered Piece</label> <input id="color-picker-coveredPiece" type="color" value="#ff0000" onchange="updateColors()" />
+		</div>
+		
+		<div id="space-counts-container">
+			Spaces Free: <span id="space-count-free">0</span> <br/>
+			Spaces with Piece on: <span id=space-count-pieceOn>0</span> <br/>
+			Spaces Covered: <span id="space-count-covered">0</span> <br/>
+		</div>
+	</body>
+	<script type="text/javascript" src="NChessPieces.js"></script>
+	<script>
+		createBoard(8,8);
+	</script>
+</html>
